@@ -1,9 +1,19 @@
 import React from 'react';
-import { TestCompo } from './components/test';
+import './App.css'
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter } from 'react-router-dom'
+
+import { MainWrapper } from './components/mainwrapper';
+
+type TParams = { id: string };
 
 function App() {
   return (
-    <  TestCompo />
+    <ChakraProvider>
+      <BrowserRouter>
+        <MainWrapper />
+      </BrowserRouter>
+    </ChakraProvider>
   );
 }
 
