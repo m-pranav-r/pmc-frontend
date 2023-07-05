@@ -1,4 +1,4 @@
-import { Button, Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Button, Heading, Wrap, WrapItem } from "@chakra-ui/react";
 import { FC } from "react"
 import { useNavigate } from "react-router-dom";
 
@@ -6,8 +6,18 @@ export const NavBar: FC = () => {
     const navigate = useNavigate()
     const links = ['Home', 'Listings', 'Your Listing', 'Account']
     return (
-        <div className="nav">
-            <Heading>PMC Market</Heading>
+        <Box
+            bg='gray'
+            display='flex'
+            alignItems='center'
+            justifyContent='end'
+            py='20px'
+            px='30px'
+        >
+            <Heading
+                size='2xl'
+                mr='55%'
+            >PMC Market</Heading>
             <Wrap
                 spacing='30px'
                 justify='right'
@@ -30,6 +40,6 @@ export const NavBar: FC = () => {
                     );
                 })}
             </Wrap>
-        </div>
+        </Box >
     );
 }
