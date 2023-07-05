@@ -1,5 +1,17 @@
-.test-prim {
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
+* {
+  scrollbar-width: none;
+}
+
+.nav {
+  background-color: gray;
+  padding: 20px;
+}
+
+.nav-head {
+  display: inline;
+  border: 2px solid black;
+}
+
+.nav-item {
+  border: 2px solid blue;
 }
