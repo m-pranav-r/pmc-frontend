@@ -9,21 +9,21 @@ import {
     useDisclosure,
     Button,
     Box,
+    Center,
+    Stack,
+    Heading,
 } from '@chakra-ui/react'
 
 import {
-    Step,
-    StepDescription,
-    StepIcon,
-    StepIndicator,
-    StepNumber,
-    StepSeparator,
-    StepStatus,
-    StepTitle,
-    Stepper,
-    useSteps,
-} from '@chakra-ui/react'
-import { FC, useEffect, useRef } from "react"
+    FC,
+    useEffect,
+    useRef
+} from "react"
+
+import { Form, useSubmit } from 'react-router-dom'
+
+import { UserFormStepper } from './listingstepper'
+
 export const UserListing: FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const ldr = useRef<HTMLButtonElement>(null)
@@ -58,34 +58,43 @@ export const UserListing: FC = () => {
 }
 
 export const UserListingForm: FC = () => {
-    const steps = [
-        { title: "Identification" },
-        { title: "Metrics" },
-        { title: "Final" }
-    ]
-    const { activeStep } = useSteps({
-        index: 1,
-        count: 3
-    })
+    const submit = useSubmit()
     return (
         <Box>
-            <Stepper index={activeStep}>
-                {steps.map((step, index) => (
-                    <Step key={index}>
-                        <StepIndicator>
-                            <StepStatus
-                                complete={<StepIcon />}
-                                incomplete={<StepNumber />}
-                                active={<StepNumber />}
-                            />
-                        </StepIndicator>
-                        <Box>
-                            <StepTitle>{step.title}</StepTitle>
+            <UserFormStepper index={1} count={3} />
+            <Center>
+                <Stack>
+                    <Form
+                        onChange={e => submit(e.currentTarget)}
+                    >
+                        <Box
+                            mt='80px'
+                            bg='red.100'
+                            border='1px solid red'
+                            borderRadius='lg'
+                            boxSize='xl'
+                            w='1200px'
+                        >
+                            <Heading
+                            >
+                                Form Area 1
+                            </Heading>
+
+
                         </Box>
-                        <StepSeparator />
-                    </Step>
-                ))}
-            </Stepper>
+                        <Box>
+                            <Heading>
+                                Form Area 2
+                            </Heading>
+                        </Box>
+                        <Box>
+                            <Heading>
+                                Form Area 3
+                            </Heading>
+                        </Box>
+                    </Form>
+                </Stack>
+            </Center>
         </Box>
     );
 }

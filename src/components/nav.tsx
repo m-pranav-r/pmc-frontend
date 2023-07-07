@@ -1,9 +1,17 @@
-import { Box, Button, Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+    Box,
+    Heading,
+    Text,
+    Wrap,
+    WrapItem,
+    Link
+} from "@chakra-ui/react";
 import { FC } from "react"
-import { useNavigate } from "react-router-dom";
+import {
+    Link as RouterLink
+} from "react-router-dom";
 
 export const NavBar: FC = () => {
-    const navigate = useNavigate()
     const links = ['Home', 'Listings', 'Your Listing', 'Account']
     return (
         <Box
@@ -28,15 +36,9 @@ export const NavBar: FC = () => {
                 {links.map(link => {
                     const name = link.split(" ").slice(-1)[0].toLowerCase()
                     return (
-                        <WrapItem>
-                            <Button
-                                colorScheme="orange"
-                                variant="solid"
-                                onClick={() => navigate(name)}
-                            >
-                                /{name}
-                            </Button>
-                        </WrapItem>
+                        <Link as={RouterLink} to={name}>
+                            {name}
+                        </Link>
                     );
                 })}
             </Wrap>
