@@ -4,7 +4,8 @@ import {
     Text,
     Wrap,
     WrapItem,
-    Link
+    Link,
+    Button
 } from "@chakra-ui/react";
 import { FC } from "react"
 import {
@@ -36,9 +37,16 @@ export const NavBar: FC = () => {
                 {links.map(link => {
                     const name = link.split(" ").slice(-1)[0].toLowerCase()
                     return (
-                        <Link as={RouterLink} to={name}>
-                            {name}
-                        </Link>
+                        <Button>
+                            <Link
+                                as={RouterLink}
+                                to={name}
+                                p='10px'
+
+                            >
+                                {name}
+                            </Link>
+                        </Button>
                     );
                 })}
             </Wrap>

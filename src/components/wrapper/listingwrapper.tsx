@@ -17,8 +17,7 @@ import {
     IconButton
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
-import { Listing } from "./listing"
-import { start } from "repl";
+import { Listing } from "../listing/listing"
 
 export const BaseWrapper: FC = () => {
     const [filterProps, setFilterProps] = useState({
@@ -43,9 +42,7 @@ export const BaseWrapper: FC = () => {
             base => base.rating >= filterProps.ratingThreshold
         )
     return (
-        <Box
-        //bg='green'
-        >
+        <Box>
             <Flex
                 flexDirection='row'
                 grow='1'

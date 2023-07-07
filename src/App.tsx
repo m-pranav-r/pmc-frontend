@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { MainWrapper } from './components/mainwrapper';
+import { MainWrapper } from './components/wrapper/mainwrapper';
 
 function App() {
   return (

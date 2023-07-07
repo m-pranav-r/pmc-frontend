@@ -10,21 +10,24 @@ import {
     Button,
     Box,
     Center,
-    Stack,
-    Heading,
+    Fade,
+    Spinner,
 } from '@chakra-ui/react'
 
 import {
     FC,
     useEffect,
-    useRef
+    useRef,
+    useState
 } from "react"
 
-import { Form, useSubmit } from 'react-router-dom'
+import { ActionFunction, Form, useNavigate } from 'react-router-dom'
 
-import { UserFormStepper } from './listingstepper'
+import { UserFormStepper } from './listing-new-stepper'
+import { FirstForm } from './listing-new-form-1'
 
-export const UserListing: FC = () => {
+
+export const UserListingDialog: FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const ldr = useRef<HTMLButtonElement>(null)
     useEffect(() => {
@@ -57,44 +60,32 @@ export const UserListing: FC = () => {
     );
 }
 
+export const formAction: ActionFunction = async ({ request, params }) => {
+    const data = await request.formData()
+    console.log(data)
+    return null
+}
+
 export const UserListingForm: FC = () => {
-    const submit = useSubmit()
+    const [focusOnFirst, setFocusOnFirst] = useState(true)
+    const [isProcessing, setIsProcessing] = useState(false)
+    const navigate = useNavigate()
     return (
         <Box>
             <UserFormStepper index={1} count={3} />
-            <Center>
-                <Stack>
-                    <Form
-                        onChange={e => submit(e.currentTarget)}
-                    >
-                        <Box
-                            mt='80px'
-                            bg='red.100'
-                            border='1px solid red'
-                            borderRadius='lg'
-                            boxSize='xl'
-                            w='1200px'
-                        >
-                            <Heading
-                            >
-                                Form Area 1
-                            </Heading>
-
-
-                        </Box>
-                        <Box>
-                            <Heading>
-                                Form Area 2
-                            </Heading>
-                        </Box>
-                        <Box>
-                            <Heading>
-                                Form Area 3
-                            </Heading>
-                        </Box>
-                    </Form>
-                </Stack>
-            </Center>
-        </Box>
+            <Fade in={isProcessing}>
+                <Center>
+                    <Spinner />
+                </Center>
+            </Fade>
+            <FirstForm focus={focusOnFirst} nextCallback={() => {
+                setFocusOnFirst(false)
+                setIsProcessing(true)
+                setTimeout(() => {
+                    setFocusOnFirst(true)
+                    setIsProcessing(false)
+                }, 3000)
+            }} />
+        </Box >
     );
 }

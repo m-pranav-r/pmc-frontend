@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { NavBar } from "./nav";
-import { BaseWrapper } from "./base/basewrapper";
-import { UserListingForm } from "./listing/listingself";
+import { NavBar } from "../nav";
+import { BaseWrapper } from "./listingwrapper";
+import { UserListingForm, formAction } from "../user/listing-new";
 
 import {
     createBrowserRouter,
@@ -42,7 +42,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'listing',
-                element: <UserListingForm />
+                element: <UserListingForm />,
+                action: formAction
             },
             {
                 path: 'account',
