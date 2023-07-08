@@ -14,12 +14,57 @@ import {
     RangeSliderThumb,
     Checkbox,
     CheckboxGroup,
-    IconButton
+    IconButton,
+    HStack
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Listing } from "../listing/listing"
 
 export const BaseWrapper: FC = () => {
+    const [filterProps, setFilterProps] = useState({
+        ratingThreshold: 0,
+        strengthMin: 0,
+        strengthMax: 100000,
+        commanders: new Set()
+    })
+    useEffect(() => {
+        const tempCommanders = filterProps.commanders
+        initBasesData.forEach(base => tempCommanders.add(base.owner))
+        setFilterProps({ ...filterProps, commanders: tempCommanders })
+    }, [])
+    const basesData = initBasesData
+        .filter(
+            base => base.strength >= filterProps.strengthMin && base.strength <= filterProps.strengthMax
+        )
+        .filter(
+            base => filterProps.commanders.has(base.owner)
+        )
+        .filter(
+            base => base.rating >= filterProps.ratingThreshold
+        )
+    return (
+        <Flex
+            dir="row"
+            grow='1'
+        >
+            <Box
+                border='2px solid black'
+                maxW='sm'
+            >
+                <Heading>
+                    Filter By...
+                </Heading>
+            </Box>
+            <Box
+                border='2px solid yellow'
+            >
+                <Heading>Test</Heading>
+            </Box>
+        </Flex>
+    );
+}
+
+export const BaseWrapperOld: FC = () => {
     const [filterProps, setFilterProps] = useState({
         ratingThreshold: 0,
         strengthMin: 0,
@@ -129,14 +174,12 @@ export const BaseWrapper: FC = () => {
                         </Flex>
                     </Flex>
                 </Box>
-                <Wrap>
+                <Wrap
+                    shouldWrapChildren={true}
+                >
                     {
                         basesData.map(base =>
-                            <WrapItem
-                                mr='60px'
-                            >
-                                <Listing {...base} id={base.id} />
-                            </WrapItem>
+                            <Listing {...base} id={base.id} />
                         )
                     }
                 </Wrap>

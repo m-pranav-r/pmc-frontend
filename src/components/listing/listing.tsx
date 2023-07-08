@@ -1,13 +1,16 @@
-import { StarIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, StarIcon } from "@chakra-ui/icons";
 import {
+    Badge,
     Box,
+    Button,
     Fade,
-    Flex,
+    HStack,
     Heading,
     Image,
     Skeleton,
-    Stack,
-    Text
+    StackDivider,
+    Text,
+    VStack
 } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react"
 
@@ -17,10 +20,11 @@ type ListingProps = {
     strength: number,
     rating: number,
     imageid: string,
-    owner: string
+    owner: string,
+    remarks: Array<string>
 }
 
-export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid, owner }) => {
+export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid, owner, remarks }) => {
     const [isLoaded, setLoaded] = useState(false)
     useEffect(() => {
         setTimeout(() => setLoaded(true), 1500)
@@ -31,54 +35,81 @@ export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid,
         >
             <Skeleton isLoaded={isLoaded}>
                 <Box
-                    border='1px solid black'
+                    borderColor='black.100'
+                    shadow='xl'
                     borderRadius='lg'
-                    //maxW='2xl'
+                    maxW='3xl'
                     p='5%'
+                    minH='sm'
                 >
-                    <Flex
-                        direction='row'
+                    <HStack
+                        divider={<StackDivider />}
                     >
-                        <Stack
-                            border='2px red solid'
-                        >
-                            <Box
-                                boxSize='s'
-                            >
-                                <Image
-                                    src={imageid}
-                                    borderRadius='10px'
-                                    alt={'img ' + id}
-                                    shadow='2xl'
-                                />
-                            </Box>
+                        <VStack>
                             <Heading
-                                size='2xl'
-                            >
-                                {name}
-                            </Heading>
-                            <Box>{strength}</Box>
-                            <Flex
-
-                            >
-                                {Array(5).fill('').map((_, i) =>
-                                    <StarIcon key={i} color={i < rating ? 'teal.500' : 'gray.300'} />
-                                )}
-                            </Flex>
-                        </Stack>
-                        <Flex
-                            direction='column'
-                            border='3px solid yellow'
-                            maxWidth='50%'
-                            alignContent='space-evenly'
+                                mt='20px'
+                                size='md'
+                            >{owner}</Heading>
+                            <Image
+                                src={imageid}
+                                shadow='md'
+                                borderRadius='xl'
+                                fit='cover'
+                                boxSize='sm'
+                            />
+                            <HStack>
+                                <Badge
+                                    colorScheme={rating >= 4.00 ? 'teal' : rating >= 2.00 ? 'yellow' : 'red'}
+                                >
+                                    <HStack>
+                                        <StarIcon />
+                                        <Box>{rating}</Box>
+                                    </HStack>
+                                </Badge>
+                                <Text>•</Text>
+                                <Box>Base Strength: {strength}</Box>
+                            </HStack>
+                        </VStack>
+                        <VStack
+                            minW='xs'
+                            boxSize='md'
+                            pl='20px'
+                            justify='space-evenly'
                         >
-                            <Heading size='xl'>Owner: {owner}</Heading>
+                            <Heading
+                            //noOfLines={1}
+                            >{name}</Heading>
+                            <HStack
+                                spacing='30px'
+                            >
+                                {remarks.map(remark =>
+                                    <Badge
+                                        color='white'
+                                        bgColor='black'
+                                        borderRadius='md'
+                                    >
+                                        {remark}
+                                    </Badge>
+                                )}
+                            </HStack>
                             <Text
-                            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta voluptatibus quasi earum aliquid in harum ipsam repudiandae. Temporibus necessitatibus excepturi hic maxime dicta cum dolore quod incidunt architecto laboriosam? Cupiditate sit minima perferendis consectetur ratione repellendus vitae eaque nam aperiam?</Text>
-                        </Flex>
-                    </Flex>
+                                fontSize='md'
+                            >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, expedita esse ipsum quisquam voluptatem sed consequuntur explicabo unde natus reiciendis voluptate eos, laborum eligendi rerum, cum odit! Dolor, omnis dolores!</Text>
+                            <Button
+                            >
+                                <HStack
+                                    align='end'
+                                >
+                                    <Text>
+                                        Know More
+                                    </Text>
+                                    <ArrowForwardIcon />
+                                </HStack>
+                            </Button>
+                        </VStack>
+                    </HStack>
                 </Box>
-            </Skeleton>
-        </Fade>
+            </Skeleton >
+        </Fade >
     );
 }

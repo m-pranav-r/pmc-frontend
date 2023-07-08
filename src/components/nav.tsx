@@ -5,7 +5,8 @@ import {
     Wrap,
     WrapItem,
     Link,
-    Button
+    Button,
+    HStack
 } from "@chakra-ui/react";
 import { FC } from "react"
 import {
@@ -16,40 +17,34 @@ export const NavBar: FC = () => {
     const links = ['Home', 'Listings', 'Your Listing', 'Account']
     return (
         <Box
-            bg='gray'
-            display='flex'
-            alignItems='center'
-            justifyContent='end'
-            py='20px'
-            px='30px'
+            color='white'
+            bgColor='black'
+            p='15px'
         >
-            <Heading
-                size='2xl'
-                mr='55%'
-            >PMC Market</Heading>
-            <Wrap
-                spacing='30px'
-                justify='right'
-                className="nav-item"
+            <HStack
+                justify='space-around'
             >
-                <WrapItem >
-                </WrapItem>
-                {links.map(link => {
-                    const name = link.split(" ").slice(-1)[0].toLowerCase()
-                    return (
-                        <Button>
-                            <Link
-                                as={RouterLink}
-                                to={name}
-                                p='10px'
+                <Heading>TEST LOGO</Heading>
+                <HStack
+                    spacing='20px'
+                >
+                    {links.map(link => {
+                        const name = link.split(" ").slice(-1)[0].toLowerCase()
+                        return (
+                            <Button>
+                                <Link
+                                    as={RouterLink}
+                                    to={name}
+                                    p='10px'
 
-                            >
-                                {name}
-                            </Link>
-                        </Button>
-                    );
-                })}
-            </Wrap>
-        </Box >
-    );
+                                >
+                                    {name}
+                                </Link>
+                            </Button>
+                        );
+                    })}
+                </HStack>
+            </HStack>
+        </Box>
+    )
 }
