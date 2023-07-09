@@ -4,10 +4,8 @@ import {
     Heading,
     Box,
     Wrap,
-    WrapItem,
     Flex,
     Stack,
-    Spacer,
     RangeSlider,
     RangeSliderTrack,
     RangeSliderFilledTrack,
@@ -15,7 +13,13 @@ import {
     Checkbox,
     CheckboxGroup,
     IconButton,
-    HStack
+    HStack,
+    VStack,
+    Center,
+    StackDivider,
+    RadioGroup,
+    Radio,
+    Divider,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Listing } from "../listing/listing"
@@ -25,7 +29,8 @@ export const BaseWrapper: FC = () => {
         ratingThreshold: 0,
         strengthMin: 0,
         strengthMax: 100000,
-        commanders: new Set()
+        commanders: new Set(),
+        sort: '1'
     })
     useEffect(() => {
         const tempCommanders = filterProps.commanders
@@ -42,93 +47,66 @@ export const BaseWrapper: FC = () => {
         .filter(
             base => base.rating >= filterProps.ratingThreshold
         )
-    return (
-        <Flex
-            dir="row"
-            grow='1'
-        >
-            <Box
-                border='2px solid black'
-                maxW='sm'
-            >
-                <Heading>
-                    Filter By...
-                </Heading>
-            </Box>
-            <Box
-                border='2px solid yellow'
-            >
-                <Heading>Test</Heading>
-            </Box>
-        </Flex>
-    );
-}
+        .sort(
+            function (a, b) {
+                if (filterProps.sort === '1') return b.rating - a.rating
+                if (filterProps.sort === '2') return b.strength - a.strength
+                return b.reviews - a.reviews
 
-export const BaseWrapperOld: FC = () => {
-    const [filterProps, setFilterProps] = useState({
-        ratingThreshold: 0,
-        strengthMin: 0,
-        strengthMax: 100000,
-        commanders: new Set()
-    })
-    useEffect(() => {
-        const tempCommanders = filterProps.commanders
-        initBasesData.forEach(base => tempCommanders.add(base.owner))
-        setFilterProps({ ...filterProps, commanders: tempCommanders })
-    }, [])
-    const basesData = initBasesData
-        .filter(
-            base => base.strength >= filterProps.strengthMin && base.strength <= filterProps.strengthMax
-        )
-        .filter(
-            base => filterProps.commanders.has(base.owner)
-        )
-        .filter(
-            base => base.rating >= filterProps.ratingThreshold
+            }
         )
     return (
-        <Box>
+        <Box
+            bg='cyan.100'
+        >
             <Flex
-                flexDirection='row'
+                direction="row"
                 grow='1'
             >
                 <Box
-                    flexBasis='20%'
-                    //bg='red.100'
-                    maxWidth='290px'
+                    bg='cyan.100'
+                    minH='100vh'
+                    mt='10vh'
+                    w='15vw'
+                    px={window.innerWidth > 1920 ? '2vw' : '0.5vw'}
+                    py='2vh'
+                    h='80vh'
+                    position='fixed'
+                    pl='2vw'
                 >
-                    <Heading
-                        size='xl'
-                        pt='10px'
-                        px='20px'
-                    >Filter By...</Heading>
-                    <Flex
-                        //bg='blue.100'
-                        direction='column'
-                        h='md'
-                        grow='1'
-                        pb='100px'
-                        px='20px'
+                    <VStack
+                        alignItems='start'
+                        spacing={window.innerWidth > 1920 ? '4vh' : '2vh'}
                     >
-                        <Spacer />
+                        <Heading>
+                            Filter By...
+                        </Heading>
                         <Box
                         >Base Strength:</Box>
-                        <RangeSlider
-                            aria-label={['min', 'max']}
-                            defaultValue={[filterProps.strengthMin, filterProps.strengthMax]}
-                            onChangeEnd={(val) => setFilterProps({ ...filterProps, strengthMin: val[0] * 1000, strengthMax: val[1] * 1000 })}>
-                            <RangeSliderTrack>
-                                <RangeSliderFilledTrack />
-                            </RangeSliderTrack>
-                            <RangeSliderThumb index={0} />
-                            <RangeSliderThumb index={1} />
-                        </RangeSlider>
+                        <Center>
+
+                            <Box
+                                px='20px'
+                                w='10vw'
+                            >
+                                <RangeSlider
+                                    aria-label={['min', 'max']}
+                                    defaultValue={[filterProps.strengthMin, filterProps.strengthMax]}
+                                    onChangeEnd={(val) => setFilterProps({ ...filterProps, strengthMin: val[0] * 1000, strengthMax: val[1] * 1000 })}>
+                                    <RangeSliderTrack>
+                                        <RangeSliderFilledTrack />
+                                    </RangeSliderTrack>
+                                    <RangeSliderThumb index={0} />
+                                    <RangeSliderThumb index={1} />
+                                </RangeSlider>
+                            </Box>
+                        </Center>
                         <Box>{filterProps.strengthMin} to {filterProps.strengthMax}</Box>
-                        <Spacer />
                         <Box>
                             <Box>Base Owner:</Box>
                             <Stack>
                                 <CheckboxGroup
+                                    size='lg'
                                     colorScheme="green"
                                     defaultValue={[...initBasesData.map(base => base.owner)]}
                                 >
@@ -155,35 +133,70 @@ export const BaseWrapperOld: FC = () => {
                                 </CheckboxGroup>
                             </Stack>
                         </Box>
-                        <Spacer />
                         <Box>
                             Base Ratings:
                         </Box>
-                        <Flex>
+                        <HStack
+                        >
                             {Array(5).fill('').map((_, i) =>
                                 <IconButton
                                     aria-label="ratings-button"
                                     key={i}
                                     //bg='blue.100'
-                                    size='lg'
+                                    size={window.innerWidth > 1920 ? 'lg' : 'sm'}
                                     color={i < filterProps.ratingThreshold ? 'teal.500' : 'gray.300'}
                                     onClick={e => setFilterProps({ ...filterProps, ratingThreshold: i + 1 })}
                                     icon={<StarIcon />}
                                 />
                             )}
-                        </Flex>
-                    </Flex>
+                        </HStack>
+                        <Divider color='#87a6ac' />
+                        <Heading>Sort By...</Heading>
+                        <VStack>
+                            <RadioGroup
+                                value={filterProps.sort}
+                                onChange={(e) => setFilterProps({ ...filterProps, sort: e })}
+                                size='lg'
+                            >
+                                <VStack
+                                    align='start'
+                                >
+                                    <Radio value='1'>Ratings</Radio>
+                                    <Radio value='2'>Strength</Radio>
+                                    <Radio value='3'>Reviews</Radio>
+                                </VStack>
+                            </RadioGroup>
+                        </VStack>
+                    </VStack>
                 </Box>
-                <Wrap
-                    shouldWrapChildren={true}
+                <Box
+                    pl='15vw'
                 >
-                    {
-                        basesData.map(base =>
-                            <Listing {...base} id={base.id} />
-                        )
-                    }
-                </Wrap>
-            </Flex>
-        </Box>
+                    <Box
+                        bg='#efefef'
+                        w='85vw'
+                    >
+                        <Center
+                            py='5vh'
+                        >
+                            <Heading
+                            >
+                                Today's Listings
+                            </Heading>
+                        </Center>
+                        <Wrap
+                            shouldWrapChildren={true}
+                            spacingX={window.innerWidth > 1920 ? '5vw' : '1vw'}
+                        >
+                            {
+                                basesData.map(base =>
+                                    <Listing {...base} id={base.id} />
+                                )
+                            }
+                        </Wrap>
+                    </Box>
+                </Box>
+            </Flex >
+        </Box >
     );
 }

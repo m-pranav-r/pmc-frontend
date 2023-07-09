@@ -20,6 +20,9 @@ export const NavBar: FC = () => {
             color='white'
             bgColor='black'
             p='15px'
+            position='fixed'
+            w='100vw'
+            zIndex='1991'
         >
             <HStack
                 justify='space-around'

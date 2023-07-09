@@ -22,7 +22,12 @@ const RootElem: FC = () => {
     return (
         <Box>
             <NavBar />
-            <Outlet />
+            <Box
+                pt='70px'
+                bg='cyan.100'
+            >
+                <Outlet />
+            </Box>
         </Box>
     )
 }
