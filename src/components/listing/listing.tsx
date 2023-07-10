@@ -7,13 +7,6 @@ import {
     HStack,
     Heading,
     Image,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Skeleton,
     StackDivider,
     Stat,
@@ -23,10 +16,10 @@ import {
     VStack,
     useDisclosure
 } from "@chakra-ui/react";
-import { FC, useEffect, useContext, useState, Context } from "react"
-import { createContext } from "vm";
+import { FC, useEffect, createContext, useState } from "react"
+import { ListingModal } from "./listingmodal";
 
-type ListingProps = {
+export type ListingProps = {
     id: number,
     name: string,
     strength: number,
@@ -37,50 +30,16 @@ type ListingProps = {
     reviews: number
 }
 
-type ListingModalProps = {
-    isOpen: boolean,
-    onOpen: () => void,
-    onClose: () => void,
-}
-
-const ListingContext = createContext<
-    { listingProps: ListingProps } | undefined
->(undefined)
-
-
-const ListingModal: FC<ListingModalProps> = ({ isOpen, onOpen, onClose }) => {
-    const ModalData: ListingProps = useContext(ListingContext)
-    useEffect(() => {
-
-    })
-    return (
-        <Box>
-            <Modal
-                isOpen={isOpen}
-                onClose={onClose}
-                size='5xl'
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{ModalData.name}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Box
-                            boxSize='xl'
-                        >
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dolores voluptates nesciunt ipsum, maiores culpa laboriosam accusantium sed voluptatum. Vero libero aspernatur pariatur rem facere sapiente, expedita debitis dolor eaque!
-                        </Box>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            onClick={onClose}
-                        >Close</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </Box>
-    );
-}
+export const ListingContext = createContext<ListingProps>({
+    id: 0,
+    name: '',
+    strength: 0,
+    rating: 0,
+    imageid: '',
+    owner: '',
+    remarks: [],
+    reviews: 0
+})
 
 export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid, owner, remarks, reviews }) => {
     const [isLoaded, setLoaded] = useState(false)
