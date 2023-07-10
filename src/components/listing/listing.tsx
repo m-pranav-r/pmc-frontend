@@ -48,7 +48,8 @@ export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid,
         setTimeout(() => setLoaded(true), 1500)
     })
     return (
-        <Box>
+        <Box
+        >
             <Fade
                 in={true}
             >
@@ -60,6 +61,8 @@ export const Listing: FC<ListingProps> = ({ id, name, strength, rating, imageid,
                         maxW={window.innerWidth > 1920 ? '5xl' : '3xl'}
                         py='10vh'
                         px='2vw'
+                        ml='2vw'
+
                     >
                         <HStack
                             divider={<StackDivider />}

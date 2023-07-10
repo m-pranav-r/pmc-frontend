@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/google.maps": "^3.53.4",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.2",
     "@types/react": "^18.2.14",

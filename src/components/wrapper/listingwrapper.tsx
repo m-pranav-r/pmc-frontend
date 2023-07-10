@@ -170,7 +170,8 @@ export const BaseWrapper: FC = () => {
                     </VStack>
                 </Box>
                 <Box
-                    pl='15vw'
+                    ml='15vw'
+                //mb='3vw'
                 >
                     <Box
                         bg='#efefef'
@@ -187,6 +188,7 @@ export const BaseWrapper: FC = () => {
                         <Wrap
                             shouldWrapChildren={true}
                             spacingX={window.innerWidth > 1920 ? '5vw' : '1vw'}
+                            pb='2vh'
                         >
                             {
                                 basesData.map(base =>
