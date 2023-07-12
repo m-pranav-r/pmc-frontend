@@ -139,9 +139,8 @@ const GMapStaticImage: FC<GMapStatisImageType> = ({ center, zoom, sizeX, sizeY, 
             `zoom=${zoom}&` +
             `size=${sizeX}x${sizeY}&` +
             `maptype=${maptype}&` +
-            `key=${process.env.GMAPS_API_KEY}`
+            `key=${process.env.REACT_APP_GMAPS_API_KEY}`
         const response = await fetch(requestString)
-        console.log(process.env.GMAPS_API_KEY)
         const image = await response.blob()
         const imageURL = URL.createObjectURL(image)
         setImageURL(imageURL)
