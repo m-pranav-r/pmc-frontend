@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { NavBar } from "../nav";
 import { BaseWrapper } from "./listingwrapper";
-import { UserListingForm, formAction } from "../user/listing-new";
+import { UserListingWrapper } from '../wrapper/userlistingwrapper'
 
 import {
     createBrowserRouter,
@@ -9,6 +9,7 @@ import {
 
 import { Outlet, RouterProvider } from "react-router";
 import { Box } from "@chakra-ui/react";
+import { UserCreateForm } from "../user/user-create";
 
 const Test0: FC = () => {
     return <h1>Home</h1>
@@ -47,12 +48,16 @@ const router = createBrowserRouter([
             },
             {
                 path: 'listing',
-                element: <UserListingForm />,
-                action: formAction
+                element: <UserListingWrapper />,
+                //action: formAction
             },
             {
                 path: 'account',
                 element: <Test3 />
+            },
+            {
+                path: 'new',
+                element: <UserCreateForm />
             }
         ],
     },

@@ -1,9 +1,6 @@
 import {
     Box,
     Heading,
-    Text,
-    Wrap,
-    WrapItem,
     Link,
     Button,
     HStack
